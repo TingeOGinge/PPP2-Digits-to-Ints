@@ -12,13 +12,16 @@ int vector_to_int(vector<int>v, int unit_marker){
 	return result; 
 }
 
-void print_results(vector<int>v, int unit_marker){
-	vector<string>units { "One(s)", "Ten(s)", "Hundred(s)", "Thousand(s)" };
-	int result = vector_to_int(v, unit_marker);
+void print_results(vector<int>digits, int unit_marker){
+//Prints the result of a vector turned into an int, with corresponding units, from a different vector 	
+	vector<string>units { "One", "Ten", "Hundred", "Thousand" };
+	int result = vector_to_int(digits, unit_marker);
 	
 	cout << result << " is comprised of "; 
-	for (int x = 0; x < unit_marker; x++){
-		cout << v[x] << " " << units[x] << ", ";
+	for (int x = unit_marker; x > 0; x--){
+		cout << digits[x] << " " << units[x];
+		if (digits[x] > 1) "s, "; 		//adds 's' when needed to ensure continuity for user
+		else cout << ", "; 
 	}
 }
 
@@ -26,7 +29,7 @@ int main(){
 //takes chars from user and places them into a vector<int>	
 //Pre-condition: user must enter either a number between 0-9, a semi-colon or a space
 //Post-condition: user input must be <= 4 digits				 
-	try{
+	try{		
 		while (true){
 			char c;
 			int unit_marker = 0;				//sets iterations for print_results()
@@ -39,8 +42,9 @@ int main(){
 				if (intvals.size(); + 1 > digit_limit) error("main() post-condition);
 				intvals[x] = c - '0'; 
 				unit_marker++;
-			}
+			}									     
 			print_results(intvals, unit_marker);
+			if (c == ';') break;									     
 		}
 	}
 	catch (exception& e){
