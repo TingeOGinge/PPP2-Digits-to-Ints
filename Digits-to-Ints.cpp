@@ -5,12 +5,7 @@ int vector_to_int(vector<int>v, int unit_marker) {
 	for (int i = 0; i < unit_marker; i++) {
 		result = result * 10 + v[i];
 	}
-	if (result > 9999) error("vector_to_int can only handle 4 digits");
 	return result;
-}
-
-void plural(int x, string y) {
-
 }
 
 void print_results(vector<int>digits, int unit_marker) {
