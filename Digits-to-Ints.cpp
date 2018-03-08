@@ -1,31 +1,8 @@
 /*
-Input - Conversion (char vector to int) - Print 
-
-User inputs a stream of chars, each of which is placed into a vector. 
-- Maximum 4 digits to start 
-char c;
-int unit_marker = 0;						//measurement marker, see print_results(); for it's use 
-vector<int>intvec(4);
-
-for (int x = 0; x > 4; x++){
-	cin >> c; 
-	if (c == ';' || c == ' ') break;
-	intvec[x] = c - '0'; 
-	unit_marker++;
-}
-
-Function needed to convert vector into a single int 
-- i < unit_marker; 
--   10 * x + vector[i]  //This appears to be the correct formula 
-
-print function will then output the int value, followed by the breakdown of chars and string measurements 
-will retrieve a vector<int>intv, int unit_marker and int end_result
--	vector<string>v { "One(s)", "Ten(s)", "Hundred(s)", "Thousand(s)" };
--	cout << end_result << " is comprised of "; 
--	for (x < unit_marker;)	
--		cout << intv[x] << " " << stringv[x] << ", "; 
-
+Input - Conversion (vector of digits to int) - Print 
 */
+
+constexpr digit_limit = 4; 			//Added to prevent "magic number", plus allows for easier expansion of program in future
 
 int vector_to_int(vector<int>v, int unit_marker){
 	int result = 0; 
@@ -45,22 +22,25 @@ void print_results(vector<int>v, int unit_marker){
 	}
 }
 
-int main()
-{
+int main(){
+//takes chars from user and places them into a vector<int>	
+//Pre-condition: user must enter either a number between 0-9, a semi-colon or a space
+//Post-condition: user input must be <= 4 digits				 
 	try{
 		while (true){
 			char c;
-			int unit_marker = 0;				//sets iterations for print_results() / vector_to_int
-			vector<int>intvals(4);
+			int unit_marker = 0;				//sets iterations for print_results()
+			vector<int>intvals(digit_limit);
 
-			for (int x = 0; x > 4; x++){
+			for (int x = 0; x < digit_limit; x++){
 				cin >> c; 
 				if (c == ';' || c == ' ') break;
-				if (c < '0' || c > '9') error("Invalid input: main()")
+				if (c < '0' || c > '9') error("main() pre-condition");
+				if (intvals.size(); + 1 > digit_limit) error("main() post-condition);
 				intvals[x] = c - '0'; 
 				unit_marker++;
 			}
-			print_results();
+			print_results(intvals, unit_marker);
 		}
 	}
 	catch (exception& e){
