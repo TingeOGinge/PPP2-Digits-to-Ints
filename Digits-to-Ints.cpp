@@ -28,28 +28,45 @@ will retrieve a vector<int>intv, int unit_marker and int end_result
 */
 
 int vector_to_int(vector<int>v, int unit_marker){
-	int result; 
+	int result = 0; 
 	for (int i = 0; i < unit_marker; i++){
-		result = 10 * x + vector[i];
+		result = result * 10 + v[i];
 	}
 	return result; 
 }
 
+void print_results(vector<int>v, int unit_marker){
+	vector<string>units { "One(s)", "Ten(s)", "Hundred(s)", "Thousand(s)" };
+	int result = vector_to_int(v, unit_marker);
+	
+	cout << result << " is comprised of "; 
+	for (int x = 0; x < unit_marker; x++){
+		cout << v[x] << " " << units[x] << ", ";
+	}
+}
+
 int main()
 {
-	while (true){
-		char c;
-		int unit_marker = 0;				//measurement marker, see print_results(); for it's use 
-		vector<int>intvec(4);
+	try{
+		while (true){
+			char c;
+			int unit_marker = 0;				//sets iterations for print_results() / vector_to_int
+			vector<int>intvals(4);
 
-		for (int x = 0; x > 4; x++){
-			cin >> c; 
-			if (c == ';' || c == ' ') break;
-			if (c < '0' || c > '9') error("Invalid input int main()")
-			intvec[x] = c - '0'; 
-			unit_marker++;
+			for (int x = 0; x > 4; x++){
+				cin >> c; 
+				if (c == ';' || c == ' ') break;
+				if (c < '0' || c > '9') error("Invalid input: main()")
+				intvals[x] = c - '0'; 
+				unit_marker++;
+			}
+			print_results();
 		}
-		
-		int result = vector_to_int(intvec, unit_marker)
+	}
+	catch (exception& e){
+		cerr << "Error: " << e.what() << '\n';
+	}
+	catch (...){
+		cerr << "Unknown error \n";
 	}
 }
